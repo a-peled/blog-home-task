@@ -51,9 +51,9 @@ export async function getPosts({ after = null, before = null } = {}) {
       query,
       variables: {
         after,
-        first: !before ? 10 : null, // works together - after is the curser, first tells it how much, same with before and last. this way we dont risk sql injection because we pass both as variables
+        first: !before ? 12 : null, // works together - after is the curser, first tells it how much, same with before and last. this way we dont risk sql injection because we pass both as variables
         before,
-        last: before ? 10 : null,
+        last: before ? 12 : null,
       },
     }), // here we add the kind of offset as variables
     next: { revalidate: 60 }, // will keep the same request as cached for the next 60 seconds

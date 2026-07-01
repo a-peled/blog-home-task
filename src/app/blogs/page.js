@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {
+  ImageWrapper,
   PageWrapper,
   PaginationButton,
   PaginationWrapper,
@@ -35,10 +36,13 @@ export default async function BlogsPage({ searchParams }) {
             <PostCard key={post.id}>
               <Link href={`/blogs/${post.slug}`}>
                 {post.featuredImage?.node && (
-                  <PostImage
-                    src={post.featuredImage.node.sourceUrl}
-                    alt={post.featuredImage.node.altText || ""}
-                  />
+                  <ImageWrapper>
+                    <PostImage
+                      src={post.featuredImage.node.sourceUrl}
+                      alt={post.featuredImage.node.altText || ""}
+                      fill
+                    />
+                  </ImageWrapper>
                 )}
 
                 <PostTitle dangerouslySetInnerHTML={{ __html: post.title }} />

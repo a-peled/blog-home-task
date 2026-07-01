@@ -1,6 +1,7 @@
 "use client";
 import styled from "styled-components";
 import Link from "next/link";
+import Image from "next/image";
 
 export const PageWrapper = styled.div`
   height: 100%;
@@ -8,6 +9,7 @@ export const PageWrapper = styled.div`
 
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: ${(props) => props.theme.spacing.md};
 
   padding: ${(props) => props.theme.spacing.xl};
@@ -16,17 +18,26 @@ export const PageWrapper = styled.div`
 export const PostContainer = styled.div`
   height: 0;
   flex: 1 1 auto;
+  width: 100%;
   max-width: 768px;
 
   overflow-y: auto;
 `;
 
-export const PostHeroImage = styled.img`
-  width: 100%;
+export const ImageWrapper = styled.div`
+  position: relative;
+
   height: 400px;
+  width: 100%;
+`;
+
+export const PostHeroImage = styled(Image)`
+  height: 100%;
+  width: 100%;
+
   object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: ${(props) => props.theme.spacing.lg};
+
+  border-radius: 8px 8px 0 0;
 `;
 
 export const PostHeader = styled.h1`

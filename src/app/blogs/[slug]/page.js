@@ -11,6 +11,7 @@ import {
   Tag,
   BackLink,
   PageWrapper,
+  ImageWrapper,
 } from "./styled";
 
 // generateMetadata is a saved name for next to know this is the
@@ -67,10 +68,13 @@ export default async function PostPage({ params }) {
 
       <PostContainer>
         {post.featuredImage?.node && (
-          <PostHeroImage
-            src={post.featuredImage.node.sourceUrl}
-            alt={post.featuredImage.node.altText || ""}
-          />
+          <ImageWrapper>
+            <PostHeroImage
+              src={post.featuredImage.node.sourceUrl}
+              alt={post.featuredImage.node.altText || ""}
+              fill
+            />
+          </ImageWrapper>
         )}
 
         <PostHeader dangerouslySetInnerHTML={{ __html: post.title }} />

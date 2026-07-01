@@ -4,6 +4,10 @@ import { sanitizeWpContent } from "./utils";
 
 const WORDPRESS_API_URL = process.env.WORDPRESS_API_URL;
 
+const credentials = Buffer.from(
+  `${process.env.WORDPRESS_USERNAME}:${process.env.WORDPRESS_APP_PASSWORD}`,
+).toString("base64");
+
 export async function getPosts({ after = null, before = null } = {}) {
   const query = `
     query GetPosts($after: String, $first: Int, $last: Int, $before: String) {
@@ -41,6 +45,7 @@ export async function getPosts({ after = null, before = null } = {}) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Basic ${credentials}`,
     },
     body: JSON.stringify({
       query,
@@ -116,6 +121,7 @@ export const getPost = cache(async function getPost(slug) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Basic ${credentials}`,
     },
     body: JSON.stringify({ query, variables: { slug } }),
   }); // no caching here - if you are in a specific post you would like to get the newest data on each refresh

@@ -2,10 +2,25 @@
 
 import styled from "styled-components";
 
+export const PageWrapper = styled.div`
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+`;
+
+export const PostsContainer = styled.div`
+  height: 0;
+  flex: 1 1 auto;
+  overflow-y: auto;
+`;
+
 export const PostList = styled.ul`
   list-style: none;
   display: grid;
   grid-template-columns: 1fr;
+  grid-auto-rows: 1fr;
   gap: ${(props) => props.theme.spacing.lg};
   padding: ${(props) => props.theme.spacing.lg};
 
@@ -19,6 +34,9 @@ export const PostList = styled.ul`
 `;
 
 export const PostCard = styled.li`
+  height: 100%;
+  width: 100%;
+
   background: ${(props) => props.theme.colors.surface};
   border-radius: 8px;
   overflow: hidden;

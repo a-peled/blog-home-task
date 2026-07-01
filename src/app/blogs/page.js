@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {
+  PageWrapper,
   PaginationButton,
   PaginationWrapper,
   PostCard,
@@ -7,6 +8,7 @@ import {
   PostImage,
   PostList,
   PostMeta,
+  PostsContainer,
   PostTitle,
 } from "./styled";
 import { getPosts } from "@/lib/wordpress";
@@ -26,36 +28,42 @@ export default async function BlogsPage({ searchParams }) {
   // we get some cursors here for dealing with the next request
 
   return (
-    <>
-      <PostList>
-        {posts.map((post) => (
-          <PostCard key={post.id}>
-            {post.featuredImage?.node && (
-              <PostImage
-                src={post.featuredImage.node.sourceUrl}
-                alt={post.featuredImage.node.altText || ""}
-              />
-            )}
+    <PageWrapper>
+      <PostsContainer>
+        <PostList>
+          {posts.map((post) => (
+            <PostCard key={post.id}>
+              <Link href={`/blogs/${post.slug}`}>
+                {post.featuredImage?.node && (
+                  <PostImage
+                    src={post.featuredImage.node.sourceUrl}
+                    alt={post.featuredImage.node.altText || ""}
+                  />
+                )}
 
-            <PostTitle dangerouslySetInnerHTML={{ __html: post.title }} />
+                <PostTitle dangerouslySetInnerHTML={{ __html: post.title }} />
 
-            <PostMeta>
-              {new Date(post.date).toLocaleDateString()} —
-              {post.categories.nodes.map((c) => c.name).join(", ")}
-            </PostMeta>
+                <PostMeta>
+                  {new Date(post.date).toLocaleDateString()} —
+                  {post.categories.nodes.map((c) => c.name).join(", ")}
+                </PostMeta>
 
-            <PostExcerpt dangerouslySetInnerHTML={{ __html: post.excerpt }} />
-            {
-              // the dangerouslySetInnerHTML is needed because wordpress
-              // can and does hold and return html type of data,
-              // like 'some words <b>this text needs to be bold</b> some
-              // more words' so to render this correctly we should use
-              // the dangerouslySetInnerHTML prop. it is a dilema of
-              // security vs correct rendering, up to debate.
-            }
-          </PostCard>
-        ))}
-      </PostList>
+                <PostExcerpt
+                  dangerouslySetInnerHTML={{ __html: post.excerpt }}
+                />
+                {
+                  // the dangerouslySetInnerHTML is needed because wordpress
+                  // can and does hold and return html type of data,
+                  // like 'some words <b>this text needs to be bold</b> some
+                  // more words' so to render this correctly we should use
+                  // the dangerouslySetInnerHTML prop. this is why we sanatize
+                  // the html that we get from the api.
+                }
+              </Link>
+            </PostCard>
+          ))}
+        </PostList>
+      </PostsContainer>
 
       <PaginationWrapper>
         {hasPreviousPage && (
@@ -69,6 +77,6 @@ export default async function BlogsPage({ searchParams }) {
           </Link>
         )}
       </PaginationWrapper>
-    </>
+    </PageWrapper>
   );
 }

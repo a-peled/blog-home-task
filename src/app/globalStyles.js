@@ -10,8 +10,9 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html, body {
-    max-width: 100vw;
-    overflow-x: hidden;
+    height: 100vh;
+    width: 100vw;
+
     font-family: ${(props) => props.theme.typography.fontFamily};
   }
 `;

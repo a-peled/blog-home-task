@@ -42,9 +42,13 @@ services:
     depends_on:
       - wordpress
     env_file:
-      - .env
+      # optional - docker sets everything it needs below, so a fresh clone
+      # works without creating a .env file (it is gitignored)
+      - path: .env
+        required: false
     environment:
       WORDPRESS_API_URL: http://wordpress:80/graphql
+      WORDPRESS_USERNAME: admin
     volumes:
       - wordpress_data:/var/www/html
     command: >

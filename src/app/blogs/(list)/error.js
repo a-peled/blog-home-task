@@ -1,18 +1,25 @@
 "use client";
-
 import { useEffect } from "react";
+import PropTypes from "prop-types";
+import { ErrorWrapper, ErrorTitle, ErrorMessage, RetryButton } from "./styled";
 
 export default function Error({ error, reset }) {
-  // pre-defined component using nextjs, like page.js but for errors
-
   useEffect(() => {
-    console.error(error); // printing the error that occured
+    console.error(error);
   }, [error]);
 
   return (
-    <div>
-      <h2>Something went wrong loading the blog posts.</h2>
-      <button onClick={() => reset()}>Try again</button>
-    </div>
+    <ErrorWrapper>
+      <ErrorTitle>Something went wrong loading the blog posts.</ErrorTitle>
+      <ErrorMessage>{error.message}</ErrorMessage>
+      <RetryButton onClick={() => reset()}>Try again</RetryButton>
+    </ErrorWrapper>
   );
 }
+
+Error.propTypes = {
+  error: PropTypes.shape({
+    message: PropTypes.string,
+  }).isRequired,
+  reset: PropTypes.func.isRequired,
+};

@@ -99,3 +99,38 @@ export const SkeletonBox = styled.div`
   animation: ${shimmer} 1.5s ease-in-out infinite;
   margin-bottom: ${(props) => props.theme.spacing.md};
 `;
+
+export const ErrorWrapper = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: ${(props) => props.theme.spacing.md};
+`;
+
+export const ErrorTitle = styled.h2`
+  font-family: ${(props) => props.theme.typography.fontFamily};
+  font-size: ${(props) => props.theme.typography.fontSizes.lg};
+  color: ${(props) => props.theme.colors.text};
+`;
+
+export const ErrorMessage = styled.p`
+  font-size: ${(props) => props.theme.typography.fontSizes.base};
+  color: ${(props) => props.theme.colors.muted};
+`;
+
+export const RetryButton = styled.button`
+  background: ${(props) => props.theme.colors.primary};
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: ${(props) => props.theme.spacing.sm}
+    ${(props) => props.theme.spacing.lg};
+  font-size: ${(props) => props.theme.typography.fontSizes.base};
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.85;
+  }
+`;

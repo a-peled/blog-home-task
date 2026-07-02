@@ -24,22 +24,6 @@ export const PostContainer = styled.div`
   overflow-y: auto;
 `;
 
-export const ImageWrapper = styled.div`
-  position: relative;
-
-  height: 400px;
-  width: 100%;
-`;
-
-export const PostHeroImage = styled(Image)`
-  height: 100%;
-  width: 100%;
-
-  object-fit: cover;
-
-  border-radius: 8px 8px 0 0;
-`;
-
 export const PostHeader = styled.h1`
   font-size: ${(props) => props.theme.typography.fontSizes.xl};
   color: ${(props) => props.theme.colors.text};

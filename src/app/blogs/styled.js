@@ -44,22 +44,6 @@ export const PostCard = styled.li`
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 `;
 
-export const ImageWrapper = styled.div`
-  position: relative;
-
-  height: 180px;
-  width: 100%;
-`;
-
-export const PostImage = styled(Image)`
-  height: 100%;
-  width: 100%;
-
-  object-fit: cover;
-
-  border-radius: 8px 8px 0 0;
-`;
-
 export const PostTitle = styled.h2`
   font-family: ${(props) => props.theme.typography.fontFamily};
   font-size: ${(props) => props.theme.typography.fontSizes.lg};

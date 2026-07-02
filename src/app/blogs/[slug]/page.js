@@ -3,7 +3,6 @@ import { getPost } from "@/lib/wordpress";
 import { stripHtml } from "@/lib/utils";
 import {
   PostContainer,
-  PostHeroImage,
   PostHeader,
   PostMetaInfo,
   PostContent,
@@ -11,8 +10,8 @@ import {
   Tag,
   BackLink,
   PageWrapper,
-  ImageWrapper,
 } from "./styled";
+import WordPressImage from "@/components/WordpressImage";
 
 // generateMetadata is a saved name for next to know this is the
 // function for generation the meta tags for the html page,
@@ -68,13 +67,13 @@ export default async function PostPage({ params }) {
 
       <PostContainer>
         {post.featuredImage?.node && (
-          <ImageWrapper>
-            <PostHeroImage
-              src={post.featuredImage.node.sourceUrl}
-              alt={post.featuredImage.node.altText || ""}
-              fill
-            />
-          </ImageWrapper>
+          <WordPressImage
+            src={post.featuredImage.node.sourceUrl}
+            alt={post.featuredImage.node.altText}
+            height="180px"
+            borderRadius="8px 8px 0 0"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
         )}
 
         <PostHeader dangerouslySetInnerHTML={{ __html: post.title }} />

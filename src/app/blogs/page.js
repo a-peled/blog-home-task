@@ -1,18 +1,17 @@
 import Link from "next/link";
 import {
-  ImageWrapper,
   PageWrapper,
   PaginationButton,
   PaginationWrapper,
   PostCard,
   PostExcerpt,
-  PostImage,
   PostList,
   PostMeta,
   PostsContainer,
   PostTitle,
 } from "./styled";
 import { getPosts } from "@/lib/wordpress";
+import WordPressImage from "@/components/WordpressImage";
 
 export default async function BlogsPage({ searchParams }) {
   const params = await searchParams;
@@ -36,13 +35,13 @@ export default async function BlogsPage({ searchParams }) {
             <PostCard key={post.id}>
               <Link href={`/blogs/${post.slug}`}>
                 {post.featuredImage?.node && (
-                  <ImageWrapper>
-                    <PostImage
-                      src={post.featuredImage.node.sourceUrl}
-                      alt={post.featuredImage.node.altText || ""}
-                      fill
-                    />
-                  </ImageWrapper>
+                  <WordPressImage
+                    src={post.featuredImage.node.sourceUrl}
+                    alt={post.featuredImage.node.altText}
+                    height="180px"
+                    borderRadius="8px 8px 0 0"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
                 )}
 
                 <PostTitle dangerouslySetInnerHTML={{ __html: post.title }} />

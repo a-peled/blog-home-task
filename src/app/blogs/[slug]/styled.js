@@ -157,3 +157,23 @@ export const RetryButton = styled.button`
     opacity: 0.85;
   }
 `;
+
+export const NotFoundWrapper = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: ${(props) => props.theme.spacing.md};
+`;
+
+export const NotFoundTitle = styled.h1`
+  font-family: ${(props) => props.theme.typography.fontFamily};
+  font-size: ${(props) => props.theme.typography.fontSizes.xl};
+  color: ${(props) => props.theme.colors.text};
+`;
+
+export const NotFoundMessage = styled.p`
+  font-size: ${(props) => props.theme.typography.fontSizes.base};
+  color: ${(props) => props.theme.colors.muted};
+`;

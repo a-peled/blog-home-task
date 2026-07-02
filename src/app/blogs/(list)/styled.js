@@ -1,6 +1,6 @@
 "use client"; // needed because these use the theme context, which can only run on the client (browser)
 
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const PageWrapper = styled.div`
   height: 100%;
@@ -84,4 +84,18 @@ export const PaginationButton = styled.button`
   &:hover {
     opacity: 0.85;
   }
+`;
+
+const shimmer = keyframes`
+  0% { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+`;
+
+export const SkeletonBox = styled.div`
+  height: ${(props) => props.$height || "20px"};
+  border-radius: 4px;
+  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+  background-size: 400px 100%;
+  animation: ${shimmer} 1.5s ease-in-out infinite;
+  margin-bottom: ${(props) => props.theme.spacing.md};
 `;

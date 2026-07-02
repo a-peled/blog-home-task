@@ -1,6 +1,6 @@
 "use client";
 
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import Link from "next/link";
 
 export const PageWrapper = styled.div`
@@ -107,4 +107,18 @@ export const BackLink = styled(Link)`
   &:hover {
     text-decoration: underline;
   }
+`;
+
+const shimmer = keyframes`
+  0% { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+`;
+
+export const SkeletonBox = styled.div`
+  height: ${(props) => props.$height || "20px"};
+  border-radius: 4px;
+  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+  background-size: 400px 100%;
+  animation: ${shimmer} 1.5s ease-in-out infinite;
+  margin-bottom: ${(props) => props.theme.spacing.md};
 `;

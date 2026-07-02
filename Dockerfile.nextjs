@@ -1,0 +1,17 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+ARG WORDPRESS_API_URL=http://wordpress:8080/graphql
+ENV WORDPRESS_API_URL=$WORDPRESS_API_URL
+
+RUN npm run build
+
+EXPOSE 3000
+
+CMD ["npm", "start"]

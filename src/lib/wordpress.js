@@ -4,11 +4,32 @@ import { sanitizeWpContent } from "./utils";
 
 const WORDPRESS_API_URL = process.env.WORDPRESS_API_URL;
 
-const credentials = Buffer.from(
-  `${process.env.WORDPRESS_USERNAME}:${process.env.WORDPRESS_APP_PASSWORD}`,
-).toString("base64");
+// WordPress returns absolute upload URLs (http://localhost:8080/wp-content/...).
+// We strip the origin so images resolve relative to the Next.js server, which
+// proxies /wp-content/uploads to WordPress (see rewrites in next.config.mjs).
+function toRelativeUploadUrl(url) {
+  if (!url) return url;
+  return url.replace(/^https?:\/\/[^/]+/, "");
+}
+
+function withRelativeFeaturedImage(post) {
+  if (!post.featuredImage?.node?.sourceUrl) return post;
+  return {
+    ...post,
+    featuredImage: {
+      node: {
+        ...post.featuredImage.node,
+        sourceUrl: toRelativeUploadUrl(post.featuredImage.node.sourceUrl),
+      },
+    },
+  };
+}
 
 export async function getPosts({ after = null, before = null } = {}) {
+  const credentials = Buffer.from(
+    `${process.env.WORDPRESS_USERNAME}:${process.env.WORDPRESS_APP_PASSWORD}`,
+  ).toString("base64");
+
   const query = `
     query GetPosts($after: String, $first: Int, $last: Int, $before: String) {
       posts(first: $first, after: $after, last: $last, before: $before, where: { orderby: { field: DATE, order: DESC } }) {
@@ -74,7 +95,7 @@ export async function getPosts({ after = null, before = null } = {}) {
   return {
     ...posts,
     nodes: posts.nodes.map((post) => ({
-      ...post,
+      ...withRelativeFeaturedImage(post),
       title: sanitizeWpContent(post.title),
       excerpt: sanitizeWpContent(post.excerpt), // util function for sanitizing the html for safe rendering
     })),
@@ -87,6 +108,10 @@ export async function getPosts({ after = null, before = null } = {}) {
 // only once. in different from the next cache, this is valid
 // only for the same request, not for a set time.
 export const getPost = cache(async function getPost(slug) {
+  const credentials = Buffer.from(
+    `${process.env.WORDPRESS_USERNAME}:${process.env.WORDPRESS_APP_PASSWORD}`,
+  ).toString("base64");
+
   const query = `
     query GetPost($slug: ID!) {
       post(id: $slug, idType: SLUG) {
@@ -142,8 +167,11 @@ export const getPost = cache(async function getPost(slug) {
   }
 
   return {
-    ...post,
+    ...withRelativeFeaturedImage(post),
     title: sanitizeWpContent(post.title),
-    content: sanitizeWpContent(post.content),
+    content: sanitizeWpContent(post.content).replace(
+      /https?:\/\/[^/"'\s]+\/wp-content\/uploads/g,
+      "/wp-content/uploads",
+    ), // inline images in content also go through the /wp-content/uploads proxy
   };
 });

@@ -76,12 +76,6 @@ Posts.propTypes = {
       }),
     }),
   ).isRequired,
-  pageInfo: PropTypes.shape({
-    hasNextPage: PropTypes.bool.isRequired,
-    hasPreviousPage: PropTypes.bool.isRequired,
-    endCursor: PropTypes.string,
-    startCursor: PropTypes.string,
-  }).isRequired,
 };
 
 Posts.defaultProps = {

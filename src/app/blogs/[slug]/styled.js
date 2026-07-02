@@ -1,7 +1,7 @@
 "use client";
+
 import styled from "styled-components";
 import Link from "next/link";
-import Image from "next/image";
 
 export const PageWrapper = styled.div`
   height: 100%;

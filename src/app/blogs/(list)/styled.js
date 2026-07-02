@@ -1,7 +1,6 @@
 "use client"; // needed because these use the theme context, which can only run on the client (browser)
 
 import styled from "styled-components";
-import Image from "next/image";
 
 export const PageWrapper = styled.div`
   height: 100%;
@@ -17,7 +16,7 @@ export const PostsContainer = styled.div`
   overflow-y: auto;
 `;
 
-export const PostList = styled.ul`
+export const PostsList = styled.ul`
   list-style: none;
   display: grid;
   grid-template-columns: 1fr;

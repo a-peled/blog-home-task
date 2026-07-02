@@ -1,0 +1,6 @@
+# Shell scripts and SQL run inside Linux containers - they must keep LF
+# endings even when the repo is cloned on Windows (where git may otherwise
+# convert text files to CRLF and break the scripts' shebang lines).
+* text=auto
+*.sh text eol=lf
+*.sql text eol=lf
